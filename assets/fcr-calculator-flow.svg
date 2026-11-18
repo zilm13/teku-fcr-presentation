@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title description">
+  <title id="title">FastConfirmationCalculator getLatestConfirmed control flow</title>
+  <desc id="description">Start with the stored confirmed root. Revalidate it, falling back to finalized when necessary. Both paths continue through an optional epoch-start restart. If the resulting root is recent enough, attempt to advance through canonical descendants, otherwise return it directly. The tracker applies the returned root later.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L9 4.5 L0 9 Z" fill="#49636a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #24292e; text-anchor: middle; }
+    .label { font-size: 25px; font-weight: 700; }
+    .detail { font-size: 21px; }
+    .method { font-family: "DejaVu Sans Mono", monospace; font-size: 25px; }
+    .branch { font-size: 20px; fill: #49636a; }
+    .edge { fill: none; stroke: #49636a; stroke-width: 2.5; marker-end: url(#arrow); }
+    .box { fill: #eef3f5; stroke: #627780; stroke-width: 1.7; }
+    .decision { fill: #ffffff; stroke: #627780; stroke-width: 1.7; }
+  </style>
+
+  <path class="edge" d="M430 66 V82"/>
+  <path class="edge" d="M760 137 H850"/>
+  <text class="branch" x="805" y="122">No</text>
+  <path class="edge" d="M430 192 V214"/>
+  <text class="branch" x="396" y="211">Yes</text>
+  <path class="edge" d="M1015 176 V202 H430 V214"/>
+  <path class="edge" d="M430 284 V302"/>
+  <path class="edge" d="M430 384 V410"/>
+  <text class="branch" x="464" y="404">Yes</text>
+  <path class="edge" d="M690 343 H1015 V416"/>
+  <text class="branch" x="805" y="331">No</text>
+  <path class="edge" d="M760 442 H850"/>
+
+  <rect class="box" x="100" y="10" width="660" height="56" rx="3"/>
+  <text class="method" x="430" y="35">getLatestConfirmed()</text>
+  <text class="detail" x="430" y="58">start with fcrStore.confirmedRoot()</text>
+
+  <path class="decision" d="M430 82 L760 137 L430 192 L100 137 Z"/>
+  <text class="label" x="430" y="132" style="font-size:23px">Tracked, recent and canonical?</text>
+  <text class="detail" x="430" y="155" style="font-size:19px">Epoch start: isConfirmedChainSafe()</text>
+
+  <rect x="850" y="102" width="330" height="74" rx="3" fill="#fff2cb" stroke="#b18c35" stroke-width="1.7"/>
+  <text class="label" x="1015" y="133" style="font-size:24px">Use finalized root</text>
+  <text class="detail" x="1015" y="161">continue processing</text>
+
+  <rect x="100" y="214" width="660" height="70" rx="3" fill="#e0f1ec" stroke="#4a877b" stroke-width="1.7"/>
+  <text class="label" x="430" y="244" style="font-size:23px">Restart from observed justified checkpoint</text>
+  <text class="detail" x="430" y="270">only if epoch-start conditions pass</text>
+
+  <path class="decision" d="M430 302 L690 343 L430 384 L170 343 Z"/>
+  <text class="label" x="430" y="339" style="font-size:24px">Root recent enough?</text>
+  <text class="detail" x="430" y="362" style="font-size:19px">current or previous epoch</text>
+
+  <rect x="100" y="410" width="660" height="64" rx="3" fill="#e0f1ec" stroke="#4a877b" stroke-width="1.7"/>
+  <text class="method" x="430" y="438" style="font-size:24px">findLatestConfirmedDescendant()</text>
+  <text class="detail" x="430" y="462">two-phase canonical-chain walk</text>
+
+  <rect class="box" x="850" y="416" width="330" height="60" rx="3"/>
+  <text class="label" x="1015" y="443" style="font-size:24px">Return chosen root</text>
+  <text class="detail" x="1015" y="467" style="font-size:19px">tracker applies it later</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="325" viewBox="0 0 1160 325" role="img" aria-labelledby="title description">
+  <title id="title">Confirmed prefix and unconfirmed fork-choice head</title>
+  <desc id="description">B0 is finalized, B2 is the previous justified checkpoint, and B3 is the current target. The confirmed path extends through B4 with 85 percent support. Its child B6 is the head but has only 60 percent support. The competing B5 to B7 branch has 5 percent support.</desc>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; text-anchor: middle; fill: #24292e; }
+    .label { font-size: 22px; }
+    .epoch { font-size: 20px; fill: #59636d; }
+    .block { font-size: 25px; font-weight: 700; }
+    .score { font-size: 19px; }
+    .confirmed { fill: #e0f1ec; stroke: #18756a; stroke-width: 3; }
+    .pending { fill: #f4f5f6; stroke: #7a828a; stroke-width: 2.5; }
+    .path { fill: none; stroke: #18756a; stroke-width: 4; }
+    .branch { fill: none; stroke: #90979e; stroke-width: 3; }
+  </style>
+
+  <path class="path" d="M127 150 H193 M297 150 H363 M467 150 H533 M637 150 H698 V70 H748"/>
+  <path class="branch" d="M852 70 H998 M698 150 V230 H748 M852 230 H998"/>
+
+  <text class="label" x="75" y="88">Finalized</text>
+  <rect x="23" y="112" width="104" height="76" rx="3" fill="#dcebdc" stroke="#48734c" stroke-width="3"/>
+  <text class="block" x="75" y="158">B0</text>
+  <text class="epoch" x="75" y="220">E-2</text>
+
+  <rect class="confirmed" x="193" y="112" width="104" height="76" rx="3"/>
+  <text class="block" x="245" y="158">B1</text>
+
+  <text class="label" x="415" y="88">Justified</text>
+  <rect x="363" y="112" width="104" height="76" rx="3" fill="#fff0bf" stroke="#b98b20" stroke-width="3"/>
+  <text class="block" x="415" y="158">B2</text>
+  <text class="epoch" x="415" y="220">E-1</text>
+
+  <text class="label" x="585" y="88">Target</text>
+  <rect class="confirmed" x="533" y="112" width="104" height="76" rx="3"/>
+  <text class="block" x="585" y="142">B3</text>
+  <text class="score" x="585" y="172">Q = 90%</text>
+  <text class="epoch" x="585" y="220">E</text>
+
+  <text class="label" x="800" y="17" style="fill:#12665c;font-weight:700">Latest confirmed</text>
+  <rect x="748" y="32" width="104" height="76" rx="3" fill="#18756a" stroke="#12594f" stroke-width="3"/>
+  <text class="block" x="800" y="62" style="fill:#ffffff">B4</text>
+  <text class="score" x="800" y="92" style="fill:#ffffff">Q = 85%</text>
+
+  <text class="label" x="1050" y="17">Head, unconfirmed</text>
+  <rect class="pending" x="998" y="32" width="104" height="76" rx="3"/>
+  <text class="block" x="1050" y="62">B6</text>
+  <text class="score" x="1050" y="92">Q = 60%</text>
+
+  <rect class="pending" x="748" y="192" width="104" height="76" rx="3"/>
+  <text class="block" x="800" y="222">B5</text>
+  <text class="score" x="800" y="252">Q = 5%</text>
+
+  <rect class="pending" x="998" y="192" width="104" height="76" rx="3"/>
+  <text class="block" x="1050" y="222">B7</text>
+  <text class="score" x="1050" y="252">Q = 5%</text>
+
+  <text class="label" x="925" y="309">Other branch</text>
+  <text class="label" x="245" y="309" style="fill:#12665c">Green path: confirmed prefix</text>
+</svg>

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title description">
+  <title id="title">Teku fast confirmation method call flow</title>
+  <desc id="description">The normal slot-start pipeline applies deferred attestations, selects a head and schedules the FCR tracker. The asynchronous calculation rotates variables, loads states, computes the latest confirmed root and applies it. Completion returns to fork choice to send its update.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#18756a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #24292e; text-anchor: middle; }
+    .heading { font-size: 23px; font-weight: 700; }
+    .owner { font-size: 19px; font-weight: 700; fill: #445963; }
+    .method { font-family: "DejaVu Sans Mono", monospace; font-size: 22px; }
+    .detail { font-size: 18px; fill: #59636d; }
+    .node { fill: #f6f8f9; stroke: #829198; stroke-width: 1.5; }
+    .calculation { fill: #e9f5f1; stroke: #4a877b; stroke-width: 1.5; }
+    .edge { fill: none; stroke: #18756a; stroke-width: 2.5; marker-end: url(#arrow); }
+  </style>
+
+  <text class="heading" x="287" y="25">Slot-start pipeline</text>
+  <text class="heading" x="918" y="25">FCR calculation</text>
+
+  <path class="edge" d="M287 120 V136"/>
+  <path class="edge" d="M287 216 V232"/>
+  <path class="edge" d="M287 312 V328"/>
+  <path class="edge" d="M565 368 H604 V80 H645"/>
+  <text class="detail" transform="translate(590 222) rotate(-90)">async handoff</text>
+
+  <path class="edge" d="M918 120 V136"/>
+  <path class="edge" d="M918 216 V232"/>
+  <path class="edge" d="M918 312 V328"/>
+  <path class="edge" d="M918 408 V424"/>
+  <path class="edge" d="M645 464 H565"/>
+  <text class="detail" x="604" y="449">result</text>
+
+  <rect class="node" x="10" y="40" width="555" height="80" rx="3"/>
+  <text class="owner" x="287" y="62">ForkChoice</text>
+  <text class="method" x="287" y="88">onTick()</text>
+  <text class="method" x="287" y="111" style="font-size:19px">applyDeferredAttestations()</text>
+
+  <rect class="node" x="10" y="136" width="555" height="80" rx="3"/>
+  <text class="owner" x="287" y="159">ForkChoiceFastConfirmation</text>
+  <text class="method" x="287" y="186">processForSlot()</text>
+  <text class="detail" x="287" y="207">waits for deferred votes</text>
+
+  <rect class="node" x="10" y="232" width="555" height="80" rx="3"/>
+  <text class="owner" x="287" y="261">ForkChoice</text>
+  <text class="method" x="287" y="293">processHeadWithoutForkChoiceUpdate()</text>
+
+  <rect class="node" x="10" y="328" width="555" height="80" rx="3"/>
+  <text class="owner" x="287" y="351">FastConfirmationTracker</text>
+  <text class="method" x="287" y="378">onSlot()</text>
+  <text class="detail" x="287" y="400">queues work in slot order</text>
+
+  <rect class="node" x="10" y="424" width="555" height="80" rx="3"/>
+  <text class="owner" x="287" y="450">ForkChoice</text>
+  <text class="method" x="287" y="476" style="font-size:19px">notifyForkChoiceUpdatedForFastConfirmation()</text>
+  <text class="detail" x="287" y="497">back on the fork-choice event thread</text>
+
+  <rect class="calculation" x="645" y="40" width="545" height="80" rx="3"/>
+  <text class="owner" x="918" y="64">FastConfirmationTracker</text>
+  <text class="method" x="918" y="92">runFastConfirmation()</text>
+
+  <rect class="calculation" x="645" y="136" width="545" height="80" rx="3"/>
+  <text class="owner" x="918" y="159">FastConfirmationRuleUtil</text>
+  <text class="method" x="918" y="186">updateFastConfirmationVariables()</text>
+  <text class="detail" x="918" y="207">then the tracker commits applyRotation()</text>
+
+  <rect class="calculation" x="645" y="232" width="545" height="80" rx="3"/>
+  <text class="owner" x="918" y="261">FastConfirmationStateLoader</text>
+  <text class="method" x="918" y="291">load()</text>
+
+  <rect class="calculation" x="645" y="328" width="545" height="80" rx="3"/>
+  <text class="owner" x="918" y="357">FastConfirmationCalculator</text>
+  <text class="method" x="918" y="387">getLatestConfirmed()</text>
+
+  <rect class="calculation" x="645" y="424" width="545" height="80" rx="3"/>
+  <text class="owner" x="918" y="453">FastConfirmationTracker</text>
+  <text class="method" x="918" y="483">applyConfirmedRoot()</text>
+</svg>

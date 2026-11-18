@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-labelledby="title description">
+  <title id="title">FastConfirmationStore and VoteSnapshot fields</title>
+  <desc id="description">FastConfirmationStore has seven fields: store, confirmedRoot, previousEpochObservedJustifiedCheckpoint, currentEpochObservedJustifiedCheckpoint, previousEpochGreatestUnrealizedCheckpoint, previousSlotHead and currentSlotHead. VoteSnapshot has highestVotedValidatorIndex and votes. No methods are shown.</desc>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #24292e; }
+    .name { font-size: 29px; font-weight: 700; text-anchor: middle; }
+    .kind { font-size: 20px; text-anchor: end; fill: #59636d; }
+    .field { font-family: "DejaVu Sans Mono", monospace; font-size: 24px; }
+    .border { fill: #ffffff; stroke: #51616b; stroke-width: 2; }
+    .divider { stroke: #51616b; stroke-width: 1.5; }
+  </style>
+
+  <rect class="border" x="50" y="10" width="1100" height="282"/>
+  <rect x="51" y="11" width="1098" height="43" fill="#e0f1ec"/>
+  <text class="name" x="600" y="42">FastConfirmationStore</text>
+  <text class="kind" x="1128" y="40">record</text>
+  <line class="divider" x1="50" y1="54" x2="1150" y2="54"/>
+
+  <text class="field" x="75" y="84">- store : ReadOnlyStore</text>
+  <text class="field" x="75" y="115">- confirmedRoot : Bytes32</text>
+  <text class="field" x="75" y="146">- previousEpochObservedJustifiedCheckpoint : Checkpoint</text>
+  <text class="field" x="75" y="177">- currentEpochObservedJustifiedCheckpoint : Checkpoint</text>
+  <text class="field" x="75" y="208">- previousEpochGreatestUnrealizedCheckpoint : Checkpoint</text>
+  <text class="field" x="75" y="239">- previousSlotHead : Bytes32</text>
+  <text class="field" x="75" y="270">- currentSlotHead : Bytes32</text>
+
+  <rect class="border" x="50" y="316" width="1100" height="129"/>
+  <rect x="51" y="317" width="1098" height="43" fill="#e0f1ec"/>
+  <text class="name" x="600" y="348">VoteSnapshot</text>
+  <text class="kind" x="1128" y="346">final</text>
+  <line class="divider" x1="50" y1="360" x2="1150" y2="360"/>
+
+  <text class="field" x="75" y="394">- highestVotedValidatorIndex : UInt64</text>
+  <text class="field" x="75" y="428">- votes : VoteTracker[]</text>
+</svg>

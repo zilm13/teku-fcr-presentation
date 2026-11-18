@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="525" viewBox="0 0 1200 525" role="img" aria-labelledby="title description">
+  <title id="title">Two-pass confirmed-descendant walk</title>
+  <desc id="description">Build the canonical suffix using the current balance source. The optional first pass advances previous-epoch blocks using the previous slot head. Both its skip and completion paths lead to the second gate. The second pass walks the remaining suffix tentatively. Its advance is accepted only after a final filtering-safety check; otherwise the first pass result is retained.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L9 4.5 L0 9 Z" fill="#49636a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #24292e; text-anchor: middle; }
+    .label { font-size: 23px; font-weight: 700; }
+    .detail { font-size: 20px; }
+    .method { font-family: "DejaVu Sans Mono", monospace; font-size: 22px; }
+    .branch { font-size: 19px; fill: #49636a; }
+    .edge { fill: none; stroke: #49636a; stroke-width: 2.5; marker-end: url(#arrow); }
+    .decision { fill: #ffffff; stroke: #627780; stroke-width: 1.7; }
+    .confirmed { fill: #e0f1ec; stroke: #4a877b; stroke-width: 1.7; }
+    .tentative { fill: #fff2cb; stroke: #b18c35; stroke-width: 1.7; }
+  </style>
+
+  <path class="edge" d="M285 60 V85"/>
+  <path class="edge" d="M285 175 V205"/>
+  <text class="branch" x="319" y="198">Yes</text>
+  <path class="edge" d="M550 130 H655"/>
+  <text class="branch" x="599" y="115">Skip</text>
+  <path class="edge" d="M550 257 H604 V130 H655"/>
+  <text class="branch" transform="translate(621 225) rotate(-90)">next pass</text>
+
+  <path class="edge" d="M920 175 V205"/>
+  <text class="branch" x="954" y="198">Yes</text>
+  <path class="edge" d="M1185 130 H1193 V482 H550"/>
+  <text class="branch" x="1162" y="196">No</text>
+
+  <path class="edge" d="M920 310 V330"/>
+  <path class="edge" d="M655 375 H550"/>
+  <text class="branch" x="601" y="360">Yes</text>
+  <path class="edge" d="M1185 375 H1193 V482 H550"/>
+  <text class="branch" x="1162" y="434">No</text>
+  <text class="branch" x="881" y="466">keep confirmedRoot</text>
+  <path class="edge" d="M285 407 V455"/>
+
+  <rect x="20" y="5" width="1160" height="55" rx="3" fill="#eef3f5" stroke="#627780" stroke-width="1.7"/>
+  <text class="method" x="600" y="30">getAncestorRoots(head, latestConfirmedRoot)</text>
+  <text class="detail" x="600" y="52">currentBalanceSource for both passes</text>
+
+  <path class="decision" d="M285 85 L550 130 L285 175 L20 130 Z"/>
+  <text class="label" x="285" y="125">Pass 1: previous-epoch gate?</text>
+  <text class="detail" x="285" y="149" style="font-size:18px">eligible to use previousSlotHead?</text>
+
+  <rect class="confirmed" x="20" y="205" width="530" height="105" rx="3"/>
+  <text class="label" x="285" y="230">Advance previous-epoch blocks</text>
+  <text class="detail" x="285" y="255">on the previousSlotHead chain</text>
+  <text class="method" x="285" y="280" style="font-size:21px">isOneConfirmedWithSupport()</text>
+  <text class="detail" x="285" y="302" style="font-size:18px">stop at current epoch or first failed check</text>
+
+  <path class="decision" d="M920 85 L1185 130 L920 175 L655 130 Z"/>
+  <text class="label" x="920" y="125">Pass 2: continuation gate?</text>
+  <text class="detail" x="920" y="149" style="font-size:18px">epoch start / recent justification</text>
+
+  <rect class="tentative" x="655" y="205" width="530" height="105" rx="3"/>
+  <text class="label" x="920" y="229" style="font-size:22px">Tentative walk of the remaining suffix</text>
+  <text class="detail" x="920" y="253" style="font-size:19px">On entering the current epoch:</text>
+  <text class="method" x="920" y="278" style="font-size:21px">willCurrentTargetBeJustified()</text>
+  <text class="detail" x="920" y="301" style="font-size:18px">every block must also pass LMD safety</text>
+
+  <path class="decision" d="M920 330 L1185 375 L920 420 L655 375 Z"/>
+  <text class="label" x="920" y="371">Keep tentative advance?</text>
+  <text class="detail" x="920" y="394" style="font-size:18px">final filtering-safety condition</text>
+
+  <rect class="confirmed" x="20" y="347" width="530" height="60" rx="3"/>
+  <text class="label" x="285" y="373">Accept tentative root</text>
+  <text class="method" x="285" y="398" style="font-size:20px">confirmedRoot = tentativeConfirmedRoot</text>
+
+  <rect x="20" y="455" width="530" height="55" rx="3" fill="#eef3f5" stroke="#627780" stroke-width="1.7"/>
+  <text class="method" x="285" y="478">return confirmedRoot</text>
+  <text class="detail" x="285" y="502" style="font-size:19px">only accepted advances are retained</text>
+</svg>

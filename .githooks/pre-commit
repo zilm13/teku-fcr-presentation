@@ -1,0 +1,35 @@
+#!/bin/sh
+set -eu
+export LC_ALL=C
+
+# Inspect the index, not the working copy, including force-added ignored files.
+ignored=$(git ls-files --cached --ignored --exclude-standard)
+if [ -n "$ignored" ]; then
+  printf 'Commit blocked: ignored files are staged:\n%s\n' "$ignored" >&2
+  exit 1
+fi
+
+check_content() {
+  if matches=$(git grep --cached --text -i -l -E -e "$2" -- .); then
+    printf 'Commit blocked: %s detected in:\n%s\n' "$1" "$matches" >&2
+    exit 1
+  else
+    status=$?
+    if [ "$status" -ne 1 ]; then
+      printf 'Commit check failed while scanning the index.\n' >&2
+      exit "$status"
+    fi
+  fi
+}
+
+# Character classes keep the pattern definitions from matching themselves.
+check_content 'personal filesystem paths' \
+  '/[U]sers/[^/[:space:]]+|/[h]ome/[^/[:space:]]+|/[v]ar/folders/|/[p]rivate/(var|tmp)/|file:[/][/]|[A-Za-z]:[\\/](Users|Documents and Settings)[\\/]|~[/](Documents|Desktop|Downloads|projects)(/|$)'
+
+check_content 'private keys or credential-like tokens' \
+  '[-]{5}BEGIN [A-Z0-9 ]*PRIVATE KEY[-]{5}|(AKIA|ASIA)[A-Z0-9]{16}|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{40,}|xox[baprs]-[A-Za-z0-9-]{20,}|sk-(proj-|svcacct-)?[A-Za-z0-9_-]{20,}|sk_live_[A-Za-z0-9]{20,}|npm_[A-Za-z0-9]{36,}|pypi-[A-Za-z0-9_-]{40,}|https?://[^/[:space:]]+:[^/[:space:]]+@'
+
+check_content 'literal credential assignments' \
+  "(^|[^[:alnum:]_])[[:alnum:]_-]*(password|passwd|api[_-]?key|access[_-]?token|auth[_-]?token|client[_-]?secret|secret|token)[[:alnum:]_-]*['\"]?[[:space:]]*[:=][[:space:]]*['\"]?[[:alnum:]/+_-]{8,}"
+
+printf 'Commit safety checks passed.\n'
