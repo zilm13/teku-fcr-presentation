@@ -74,6 +74,13 @@ at most 25% adversarial weight and the required network synchrony. FFG finality'
 standard safety guarantee tolerates adversarial weight below one-third without
 requiring synchrony. FCR gets earlier confirmation under these stronger assumptions.
 
+Not 100% sure on the reason why these constant was chosen but earliest FCR
+version from older rule had timings like 0.2 55 seconds, 0.25 58 seconds, 0.3 82 seconds.
+So 0.25 was chosen like running still in a moderate amount of time but with stronger
+assumptions than 0.2. Today FCR version with optimizations have timing like 0.25 8 seconds,
+0.33 13 seconds, so we could bump default spec version or at least add a command line flag 
+to let the user choose.
+
 The constant is FastConfirmationRuleUtil.CONFIRMATION_BYZANTINE_THRESHOLD = 25.
 Source: https://github.com/Consensys/teku/blob/master/ethereum/statetransition/src/main/java/tech/pegasys/teku/statetransition/forkchoice/fastconfirmation/FastConfirmationRuleUtil.java#L42
 
