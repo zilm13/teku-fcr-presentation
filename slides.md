@@ -1016,8 +1016,8 @@ ul, table {
 
 | Network | Usual head-to-confirmed gap |
 | --- | --- |
-| Mainnet | **0-1 slots** |
-| Sepolia | **2-3 slots** |
+| Mainnet | **1 slots** |
+| Sepolia | **1-3 slots** |
 
 <!--
 Slide separates published historical simulation results from live-observation
